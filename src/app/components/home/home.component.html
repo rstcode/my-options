@@ -81,7 +81,48 @@
                             </div> -->
                         </form>
 
-                        <table class="table mb-4">
+                        <div class="list-group">
+                            <!-- <a href="#" class="list-group-item list-group-item-action">A simple default list group item</a>
+                          
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">A simple primary list group item</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">List group item heading</h5>
+                                    <small class="text-muted">3 days ago</small>
+                                  </div>
+                                  <p class="mb-1">Some placeholder content in a paragraph.</p>
+                                  <small class="text-muted">And some muted small print.</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-success">A simple success list group item</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-danger"><b>-3x 10Nov 16000PE 2.8  17852</b></a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-warning">A simple warning list group item</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-info">A simple info list group item</a> -->
+                            <a *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index"
+                                href="#" class="list-group-item list-group-item-action"
+                                [ngClass]="{'list-group-item-danger': ((myOption.CurrentValue??0) <= 0), 'list-group-item-success': ((myOption.CurrentValue??0) > 0)}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{myOption.SELL? '-':'+'}}{{ (myOption.Quantity??0)}}x
+                                        {{defaultExpDateStr}} {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</h5>
+                                    <small class="text-muted"><b>{{myOption.CurrentValue | currency:'INR'}}</b></small>
+                                </div>
+                                <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
+                                <small class="text-muted"> Avg:
+                                    {{myOption.Entered}} | Current: <b>{{myOption.CurrentPrice}}</b> | Diff:
+                                    {{((myOption.Entered??0) - (myOption.CurrentPrice??0))| number : '1.2-2'}}</small>
+                                
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Total</h5>
+                                    <small class="text-muted" [ngStyle]="{'color': (getTotal(myOptions) <= 0) ? 'red':'green'}">
+                                        <b>{{ getTotal(myOptions) | currency:'INR'}}</b>
+                                    </small>
+                                  </div>
+                            </a>
+                        </div>
+
+                        <br /><br />
+                        <!-- <table class="table mb-4">
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
@@ -96,18 +137,17 @@
                                 <tr
                                     *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index">
                                     <th scope="row">{{i}}</th>
-                                    <td>{{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</td>
-                                    <td *ngIf="myOption.SELL" style="color:red;">-{{ (myOption.Quantity??0)}}</td>
-                                    <td *ngIf="myOption.BUY" style="color:green;">{{ (myOption.Quantity??0)}}</td>
-                                    <td>{{myOption.Entered}}</td>
+                                    <td>
+        <span [ngStyle]="{'color': myOption.SELL ? 'red':'green'}">{{myOption.SELL? '-':' '}}{{ (myOption.Quantity??0)}}Lt-</span> {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</td>
+                                    <!-- <td *ngIf="myOption.SELL" style="color:red;">-{{ (myOption.Quantity??0)}}</td>                                     -->
+                        <!-- <td>{{myOption.Entered}}</td>
                                     <td>{{myOption.CurrentPrice}}</td>
                                     <td [ngStyle]="{'color': ((myOption.CurrentValue??0) <= 0) ? 'red':'green'}">
                                         <b>{{myOption.CurrentValue | currency:'INR'}}</b>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"></th>
-                                    <td></td>
+                                    <th scope="row"></th>                                    
                                     <td></td>
                                     <td></td>
                                     <td><b>Total</b></td>
@@ -116,7 +156,7 @@
                                     </td>                                 
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
 
                     </div>
                 </div>

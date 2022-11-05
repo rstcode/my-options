@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   datestampNow = new Date();
   sub: Subscription;
   defaultExpDate: string = '';
+  defaultExpDateStr: string ='';
   tradeList: any[] = [];
   callStrikePrices: number[] = [];
   putStrikePrices: number[] = [];
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private optionsService: OptionsService) {
-    this.sub = interval(5000).subscribe((x => {
+    this.sub = interval(15000).subscribe((x => {
       this.callBE();
     }));
   }
@@ -108,6 +109,7 @@ export class HomeComponent implements OnInit {
       this.dataOC = data;
       console.log(data);
       this.defaultExpDate = data.records.expiryDates[1];
+      this.defaultExpDateStr = this.defaultExpDate.slice(0, -5)
       this.datestampNow = new Date();
       let strikePrice = data?.records.underlyingValue;
       this.myOptions = [];
