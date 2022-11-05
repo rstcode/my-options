@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   datestampNow = new Date();
   sub: Subscription;
   defaultExpDate: string = '';
-  defaultExpDateStr: string ='';
+  defaultExpDateStr: string = '';
   tradeList: any[] = [];
   callStrikePrices: number[] = [];
   putStrikePrices: number[] = [];
@@ -38,63 +38,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  toggleCEPE(optionType: string) {
-    if (optionType === 'CE') {
-      this.saveOption.CE = true;
-      this.saveOption.PE = false;
-    }
-    else {
-      this.saveOption.CE = false;
-      this.saveOption.PE = true;
-    }
-  }
-
-  toggleBUYSELL(orderType: string) {
-    if (orderType === 'BUY') {
-      this.saveOption.BUY = true;
-      this.saveOption.SELL = false;
-    }
-    else {
-      this.saveOption.BUY = false;
-      this.saveOption.SELL = true;
-    }
-  }
-
-  clear() {
-    localStorage.removeItem('myoptions');
-    this.myOptions = [];
-  }
-
-  add(): string {
-    if (this.saveOption.Strike && this.saveOption.Strike <= 0) {
-      return '';
-    }
-    else if (!this.saveOption.CE && !this.saveOption.PE) {
-      return '';
-    }
-    else if (!this.saveOption.BUY && !this.saveOption.SELL) {
-      return '';
-    }
-    else {
-      let str = localStorage.getItem('myoptions')?.toString();
-      if (str) {
-        this.myOptions = JSON.parse(str);
-        let ext = this.myOptions.find(p => p.Strike == this.saveOption.Strike && p.CE == this.saveOption.CE && p.PE == this.saveOption.PE);
-        if (!ext) {
-          this.myOptions.push(this.saveOption);
-          localStorage.setItem('myoptions', JSON.stringify(this.myOptions));
-        }
-      }
-      else {
-        this.myOptions = [];
-        this.myOptions.push(this.saveOption);
-        localStorage.setItem('myoptions', JSON.stringify(this.myOptions));
-      }
-      this.saveOption = new COption();
-      return '';
-    }
-  }
-
   getTotal(value: COption[]): number {
     let total = 0;
     value.forEach((coption: COption) => {
@@ -108,16 +51,20 @@ export class HomeComponent implements OnInit {
     this.optionsService.getOptions().subscribe((data: OptionsChain) => {
       this.dataOC = data;
       console.log(data);
+      this.optionsService.optionsChain = data;
+      this.optionsService.strikePrices = data.records.strikePrices;
+      this.optionsService.expiryDates =data.records.expiryDates;
       this.defaultExpDate = data.records.expiryDates[1];
       this.defaultExpDateStr = this.defaultExpDate.slice(0, -5)
       this.datestampNow = new Date();
-      let strikePrice = data?.records.underlyingValue;
+
       this.myOptions = [];
       let str = localStorage.getItem('myoptions')?.toString();
       if (str) {
         this.myOptions = JSON.parse(str);
       }
 
+      //let strikePrice = data?.records.underlyingValue;
       // console.log(this.defaultExpDate);
       // let expOptions = data.records.data.filter(p => p.expiryDate === this.defaultExpDate && p.strikePrice === 19000);
       // console.log(expOptions);
@@ -140,11 +87,6 @@ export class HomeComponent implements OnInit {
       // console.log('last10ceValumes', last10ceValumes);
 
     });
+
   }
-
-
-
-
-
-
 }

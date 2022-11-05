@@ -13,6 +13,10 @@ import { OptionsChain } from '../models/options';
 export class OptionsService {
   constructor(private http: HttpClient) { }
 
+  public optionsChain: any ;
+  public strikePrices: number[]=[];
+  public expiryDates: string[] =[];
+
   configUrl = 'https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY';
 
   getOptions() {

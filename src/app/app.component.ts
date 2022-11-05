@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { COption, OptionsChain } from './models/options';
+import { OptionsService } from './services/options.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,6 +10,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-options';
+  dataOC: any;
+  datestampNow = new Date();
+ 
+  constructor(private optionsService: OptionsService) {
+   
+  }
 
+  ngOnInit(): void {
+    this.dataOC = this.optionsService.optionsChain;
+  }
 }
+

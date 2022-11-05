@@ -60,3 +60,16 @@ export class COption {
     CurrentPrice?: number = 0;
     CurrentValue?: number = 0;
 }
+
+
+export class StrikeOption {
+    strike: number = 0;
+    ce: boolean = false;
+    get value(): string {
+        return this.strike.toString() + (this.ce ? ' CE' : ' PE');
+    }
+    constructor(strike: number, isCe: boolean) {
+        this.strike = strike;
+        this.ce = isCe;
+    }
+}

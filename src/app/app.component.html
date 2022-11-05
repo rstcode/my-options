@@ -1,17 +1,15 @@
-<app-home></app-home>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
 
-<!-- <div class="container">
-    <h1>Install Bootstrap 5 in Angular 12 - ItSolutionStuff.com</h1>
-    
-    <div class="card">
-      <div class="card-header">
-        Featured
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-  </div> -->
+      <ul>
+          <li>Symbol: {{dataOC?.filtered.data[0].PE.underlying}}</li>
+          <li>Current Price: {{dataOC?.records.underlyingValue}}</li>
+          <li>last retrived time: {{dataOC?.records.timestamp | date:'MM/dd/yy h:mm:ss a'}}</li>
+          <li>Current time: {{datestampNow | date:'MM/dd/yy h:mm:ss a'}}</li>
+      </ul>
 
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <router-outlet></router-outlet>
+      </div>
+  </div>
+</section>

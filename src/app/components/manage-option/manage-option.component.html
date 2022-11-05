@@ -1,0 +1,112 @@
+<div class="col col-lg-9 col-xl-7">
+    <div class="card rounded-3">
+        <div class="card-body p-4">
+
+            <div class="card-body p-4">
+
+                <h4 class="text-center my-3 pb-3">To Do App</h4>
+
+                <!-- <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
+                    #heroForm="ngForm">
+
+                    <div class="col-sm-2">
+                        <div class="form-outline">
+                            <input type="number" [(ngModel)]="saveOption.Strike" id="form1" name="rst"
+                                class="form-control" placeholder="Strike value" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-outline">
+                            <input type="number" [(ngModel)]="saveOption.Quantity" id="form1" name="rst2"
+                                class="form-control" placeholder="Quantity" />
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-outline">
+                            <input type="number" [(ngModel)]="saveOption.Entered" id="form1" name="rst3"
+                                class="form-control" placeholder="Entered" />
+                        </div>
+                    </div>
+                    <div class="col-12 btn-group">
+                        <input type="radio" class="btn-check" (click)="toggleCEPE('CE')" name="options-outlined"
+                            id="success-outlined" autocomplete="off">
+                        <label class="btn btn-outline-success" for="success-outlined">CE</label>
+                    </div>
+
+                    <div class="col-12 btn-group">
+                        <input type="radio" class="btn-check" (click)="toggleCEPE('PE')" name="options-outlined"
+                            id="danger-outlined" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="danger-outlined">PE</label>
+                    </div>
+
+                    <div class="col-12 btn-group">
+                        <input type="radio" class="btn-check" (click)="toggleBUYSELL('BUY')" name="options-order"
+                            id="success-order" autocomplete="off">
+                        <label class="btn btn-outline-success" for="success-order">BUY</label>
+                    </div>
+
+                    <div class="col-12 btn-group">
+                        <input type="radio" class="btn-check" (click)="toggleBUYSELL('SELL')" name="options-order"
+                            id="danger-order" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="danger-order">SELL</label>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" (click)="add()" class="btn btn-primary">Add</button>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" (click)="clear()" class="btn btn-primary">Clear</button>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" [routerLink]="['']" class="btn btn-primary">Cancel</button>
+                    </div>
+                </form>
+                <br /><br /> -->
+                <form>
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <select name="sessk" class="form-select form-select-lg mb-3" [(ngModel)]="selectedStrike" (change)="onChangeManager($event)" aria-label=".form-select-lg example" required>                                    
+                                    <option *ngFor="let strikeOption of strikeOptions" [ngValue]="strikeOption">{{strikeOption.value}}</option>                                    
+                                </select>                                
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                    <option *ngFor="let expiryDate of expiryDates" value="strikeOption">{{expiryDate}}</option> 
+                                </select>   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="number" id="form3Example1" class="form-control" />
+                                <label class="form-label" for="form3Example1">Quantity</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="number" id="form3Example2" class="form-control" />
+                                <label class="form-label" for="form3Example2">Entered</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox -->
+                    <div class="form-check d-flex justify-content-center mb-4">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+                        <label class="form-check-label" for="form2Example33">
+                            Subscribe to our newsletter
+                        </label>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

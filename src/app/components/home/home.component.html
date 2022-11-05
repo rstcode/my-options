@@ -1,166 +1,32 @@
-<section class="vh-100" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-
-        <ul>
-            <li>Symbol: {{dataOC?.filtered.data[0].PE.underlying}}</li>
-            <li>Current Price: {{dataOC?.records.underlyingValue}}</li>
-            <li>last retrived time: {{dataOC?.records.timestamp | date:'MM/dd/yy h:mm:ss a'}}</li>
-            <li>Current time: {{datestampNow | date:'MM/dd/yy h:mm:ss a'}}</li>
-        </ul>
-
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
-                <div class="card rounded-3">
-                    <div class="card-body p-4">
-
-                        <h4 class="text-center my-3 pb-3">To Do App</h4>
-
-                        <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2"
-                            #heroForm="ngForm">
-
-                            <div class="col-sm-2">
-                                <div class="form-outline">
-                                    <input type="number" [(ngModel)]="saveOption.Strike" id="form1" name="rst"
-                                        class="form-control" placeholder="Strike value" />
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-outline">
-                                    <input type="number" [(ngModel)]="saveOption.Quantity" id="form1" name="rst2"
-                                        class="form-control" placeholder="Quantity" />
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-outline">
-                                    <input type="number" [(ngModel)]="saveOption.Entered" id="form1" name="rst3"
-                                        class="form-control" placeholder="Entered" />
-                                </div>
-                            </div>
-                            <div class="col-12 btn-group">
-                                <input type="radio" class="btn-check" (click)="toggleCEPE('CE')" name="options-outlined"
-                                    id="success-outlined" autocomplete="off">
-                                <label class="btn btn-outline-success" for="success-outlined">CE</label>
-                            </div>
-
-                            <div class="col-12 btn-group">
-                                <input type="radio" class="btn-check" (click)="toggleCEPE('PE')" name="options-outlined"
-                                    id="danger-outlined" autocomplete="off">
-                                <label class="btn btn-outline-danger" for="danger-outlined">PE</label>
-                            </div>
-
-                            <div class="col-12 btn-group">
-                                <input type="radio" class="btn-check" (click)="toggleBUYSELL('BUY')"
-                                    name="options-order" id="success-order" autocomplete="off">
-                                <label class="btn btn-outline-success" for="success-order">BUY</label>
-                            </div>
-
-                            <div class="col-12 btn-group">
-                                <input type="radio" class="btn-check" (click)="toggleBUYSELL('SELL')"
-                                    name="options-order" id="danger-order" autocomplete="off">
-                                <label class="btn btn-outline-danger" for="danger-order">SELL</label>
-                            </div>
-
-
-                            <!-- <div class="col-12 btn-group">
-                                <button type="button" class="btn btn-success dropdown-toggle" (click)="toggleCallsDD()"
-                                    data-toggle="dropdown">17800 Call</button>
-                                <div class="dropdown-menu" [ngClass]="{'show': showCallsDD }">
-                                    <a class="dropdown-item" (click)="selectedCall()" href="#">17800 Call</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </div>
-                            </div> -->
-
-                            <div class="col-12">
-                                <button type="submit" (click)="add()" class="btn btn-primary">Add</button>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" (click)="clear()" class="btn btn-primary">Clear</button>
-                            </div>
-                            <!-- <div class="col-12">
-                                <button type="submit" class="btn btn-warning">Get tasks</button>
-                            </div> -->
-                        </form>
-
-                        <div class="list-group">
-                            <!-- <a href="#" class="list-group-item list-group-item-action">A simple default list group item</a>
-                          
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">A simple primary list group item</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">List group item heading</h5>
-                                    <small class="text-muted">3 days ago</small>
-                                  </div>
-                                  <p class="mb-1">Some placeholder content in a paragraph.</p>
-                                  <small class="text-muted">And some muted small print.</small>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-success">A simple success list group item</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-danger"><b>-3x 10Nov 16000PE 2.8  17852</b></a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-warning">A simple warning list group item</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-info">A simple info list group item</a> -->
-                            <a *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index"
-                                href="#" class="list-group-item list-group-item-action"
-                                [ngClass]="{'list-group-item-danger': ((myOption.CurrentValue??0) <= 0), 'list-group-item-success': ((myOption.CurrentValue??0) > 0)}">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">{{myOption.SELL? '-':'+'}}{{ (myOption.Quantity??0)}}x
-                                        {{defaultExpDateStr}} {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</h5>
-                                    <small class="text-muted"><b>{{myOption.CurrentValue | currency:'INR'}}</b></small>
-                                </div>
-                                <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
-                                <small class="text-muted"> Avg:
-                                    {{myOption.Entered}} | Current: <b>{{myOption.CurrentPrice}}</b> | Diff:
-                                    {{((myOption.Entered??0) - (myOption.CurrentPrice??0))| number : '1.2-2'}}</small>
-                                
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Total</h5>
-                                    <small class="text-muted" [ngStyle]="{'color': (getTotal(myOptions) <= 0) ? 'red':'green'}">
-                                        <b>{{ getTotal(myOptions) | currency:'INR'}}</b>
-                                    </small>
-                                  </div>
-                            </a>
-                        </div>
-
-                        <br /><br />
-                        <!-- <table class="table mb-4">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Option</th>
-                                    <th scope="col">Lots</th>
-                                    <th scope="col">Enterd</th>
-                                    <th scope="col">Current</th>
-                                    <th scope="col">Profit/loss</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index">
-                                    <th scope="row">{{i}}</th>
-                                    <td>
-        <span [ngStyle]="{'color': myOption.SELL ? 'red':'green'}">{{myOption.SELL? '-':' '}}{{ (myOption.Quantity??0)}}Lt-</span> {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</td>
-                                    <!-- <td *ngIf="myOption.SELL" style="color:red;">-{{ (myOption.Quantity??0)}}</td>                                     -->
-                        <!-- <td>{{myOption.Entered}}</td>
-                                    <td>{{myOption.CurrentPrice}}</td>
-                                    <td [ngStyle]="{'color': ((myOption.CurrentValue??0) <= 0) ? 'red':'green'}">
-                                        <b>{{myOption.CurrentValue | currency:'INR'}}</b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>                                    
-                                    <td></td>
-                                    <td></td>
-                                    <td><b>Total</b></td>
-                                    <td [ngStyle]="{'color': (getTotal(myOptions) <= 0) ? 'red':'green'}">
-                                        <b>{{ getTotal(myOptions) | currency:'INR'}}</b>
-                                    </td>                                 
-                                </tr>
-                            </tbody>
-                        </table> -->
-
+<div class="col col-lg-9 col-xl-7">
+    <div class="card rounded-3">
+        <div class="card-body p-4">
+            <h4 class="text-center my-3 pb-3">To Do App</h4>
+            <div class="list-group">
+                <a *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index"
+                    [routerLink]="['manage']" [state]="{ myOption:myOption}"
+                    class="list-group-item list-group-item-action"
+                    [ngClass]="{'list-group-item-danger': ((myOption.CurrentValue??0) <= 0), 'list-group-item-success': ((myOption.CurrentValue??0) > 0)}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{myOption.SELL? '-':'+'}}{{ (myOption.Quantity??0)}}x
+                            {{defaultExpDateStr}} {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</h5>
+                        <small class="text-muted"><b>{{myOption.CurrentValue | currency:'INR'}}</b></small>
                     </div>
-                </div>
+                    <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->
+                    <small class="text-muted"> Avg:
+                        {{myOption.Entered}} | Current: <b>{{myOption.CurrentPrice}}</b> | Diff:
+                        {{((myOption.Entered??0) - (myOption.CurrentPrice??0))| number : '1.2-2'}}</small>
+
+                </a>
+                <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Total</h5>
+                        <small class="text-muted" [ngStyle]="{'color': (getTotal(myOptions) <= 0) ? 'red':'green'}">
+                            <b>{{ getTotal(myOptions) | currency:'INR'}}</b>
+                        </small>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-</section>
+</div>

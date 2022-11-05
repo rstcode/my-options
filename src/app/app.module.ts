@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { ColorChangeDirective } from './color-change.directive';
 import { OptionsPipePipe } from './options-pipe.pipe';
+import { ManageOptionComponent } from './components/manage-option/manage-option.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ColorChangeDirective,
-    OptionsPipePipe
+    OptionsPipePipe,
+    ManageOptionComponent
   ],
   imports: [
     BrowserModule,
