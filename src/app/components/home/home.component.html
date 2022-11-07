@@ -1,15 +1,22 @@
 <div class="col col-lg-9 col-xl-7">
     <div class="card rounded-3">
         <div class="card-body p-4">
-            <h4 class="text-center my-3 pb-3">To Do App</h4>
+            <h4 class="text-center my-3 pb-3">To Do App</h4>      
+            <ul>
+                <li>Symbol: {{dataOC?.filtered.data[0].PE.underlying}}</li>
+                <li>Current Price: {{dataOC?.records.underlyingValue}}</li>
+                <li>last retrived time: {{dataOC?.records.timestamp | date:'MM/dd/yy h:mm:ss a'}}</li>
+                <li>Current time: {{datestampNow | date:'MM/dd/yy h:mm:ss a'}}</li>
+                <li> <a [routerLink]="['manage']" >Add</a></li>
+            </ul>
             <div class="list-group">
-                <a *ngFor="let myOption of (myOptions | optionsPipe: dataOC: defaultExpDate); let i = index"
+                <a *ngFor="let myOption of (myOptions | optionsPipe: dataOC); let i = index"
                     [routerLink]="['manage']" [state]="{ myOption:myOption}"
                     class="list-group-item list-group-item-action"
                     [ngClass]="{'list-group-item-danger': ((myOption.CurrentValue??0) <= 0), 'list-group-item-success': ((myOption.CurrentValue??0) > 0)}">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{myOption.SELL? '-':'+'}}{{ (myOption.Quantity??0)}}x
-                            {{defaultExpDateStr}} {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</h5>
+                            {{getSlice(myOption.ExpDate??'')}} {{myOption.Strike}} {{myOption.CE?'CE':'PE'}}</h5>
                         <small class="text-muted"><b>{{myOption.CurrentValue | currency:'INR'}}</b></small>
                     </div>
                     <!-- <p class="mb-1">Some placeholder content in a paragraph.</p> -->

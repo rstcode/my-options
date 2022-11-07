@@ -14,7 +14,9 @@ export class ManageOptionComponent implements OnInit {
   myOptions: COption[] = [];
   strikeOptions: StrikeOption[] = [];
   expiryDates: string[] = [];
-  selectedStrike: any= {};
+  selectedStrike: any = {};
+  selectedExp: string = '';
+  editIndex: number = 0;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private optionService: OptionsService) {
     let abc: any = this.router.getCurrentNavigation()?.extras.state;
@@ -23,15 +25,21 @@ export class ManageOptionComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.optionService.strikePrices);
-    this.expiryDates = this.optionService.expiryDates;    
+    if (this.saveOption) {
+      this.saveOption.Quantity ??= 0;
+    }
+    else {
+      this.saveOption = { Quantity: 0 };
+    }
+    this.expiryDates = this.optionService.expiryDates;
     this.optionService.strikePrices.forEach((strike: number) => {
       this.strikeOptions.push(new StrikeOption(strike, true));
       this.strikeOptions.push(new StrikeOption(strike, false));
     });
-    this.selectedStrike = this.strikeOptions[3];
+    this.selectedStrike = this.strikeOptions.find(p => (p.strike == this.saveOption.Strike && p.ce == this.saveOption.CE));    
   }
 
-  onChangeManager(evnt: any){
+  onChangeManager(evnt: any) {
     //this.selectedStrike = strikeOption;
     console.log(this.selectedStrike);
   }
@@ -67,7 +75,18 @@ export class ManageOptionComponent implements OnInit {
 
   }
 
+  update() {
+
+  }
+
   add(): string {
+
+    console.log(this.selectedStrike);
+    console.log(this.selectedExp);
+    this.saveOption.Strike = this.selectedStrike.strike;
+    this.saveOption.CE = this.selectedStrike.ce;
+    this.saveOption.PE = !this.selectedStrike.ce;
+
     if (this.saveOption.Strike && this.saveOption.Strike <= 0) {
       return '';
     }
@@ -78,14 +97,18 @@ export class ManageOptionComponent implements OnInit {
       return '';
     }
     else {
+
       let str = localStorage.getItem('myoptions')?.toString();
       if (str) {
         this.myOptions = JSON.parse(str);
-        let ext = this.myOptions.find(p => p.Strike == this.saveOption.Strike && p.CE == this.saveOption.CE && p.PE == this.saveOption.PE);
-        if (!ext) {
-          this.myOptions.push(this.saveOption);
-          localStorage.setItem('myoptions', JSON.stringify(this.myOptions));
+        let indx = this.myOptions.findIndex(p => p.Strike == this.saveOption.Strike && p.CE == this.saveOption.CE && p.PE == this.saveOption.PE);
+        if (indx<=0) {
+          this.myOptions.push(this.saveOption);          
         }
+        else {
+          this.myOptions[indx] = this.saveOption;
+        }
+        localStorage.setItem('myoptions', JSON.stringify(this.myOptions));
       }
       else {
         this.myOptions = [];
@@ -93,6 +116,7 @@ export class ManageOptionComponent implements OnInit {
         localStorage.setItem('myoptions', JSON.stringify(this.myOptions));
       }
       this.saveOption = new COption();
+      this.router.navigate([""]);
       return '';
     }
   }

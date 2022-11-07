@@ -7,13 +7,13 @@ import { COption, OptionsChain } from './models/options';
 })
 export class OptionsPipePipe implements PipeTransform {
 
-  transform(value: COption[], dataOC: OptionsChain, expiryDate: string): COption[] {
+  transform(value: COption[], dataOC: OptionsChain): COption[] {
 
     if (value && dataOC) {
       value.forEach((coption: COption) => {
-        let strike = dataOC.records.data.find((p: any) => p.expiryDate == expiryDate && p.strikePrice == coption.Strike);
+        let strike = dataOC.records.data.find((p: any) => p.expiryDate == coption.ExpDate && p.strikePrice == coption.Strike);
         if (!strike)
-          strike = dataOC.filtered.data.find((p: any) => p.expiryDate == expiryDate && p.strikePrice == coption.Strike);
+          strike = dataOC.filtered.data.find((p: any) => p.expiryDate == coption.ExpDate  && p.strikePrice == coption.Strike);
 
         if (strike) {
           if (coption.BUY) {

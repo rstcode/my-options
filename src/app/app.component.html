@@ -1,13 +1,5 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container py-5 h-100">
-
-      <ul>
-          <li>Symbol: {{dataOC?.filtered.data[0].PE.underlying}}</li>
-          <li>Current Price: {{dataOC?.records.underlyingValue}}</li>
-          <li>last retrived time: {{dataOC?.records.timestamp | date:'MM/dd/yy h:mm:ss a'}}</li>
-          <li>Current time: {{datestampNow | date:'MM/dd/yy h:mm:ss a'}}</li>
-      </ul>
-
       <div class="row d-flex justify-content-center align-items-center h-100">
         <router-outlet></router-outlet>
       </div>
