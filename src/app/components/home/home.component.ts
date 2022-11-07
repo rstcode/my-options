@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private optionsService: OptionsService) {
-    this.sub = interval(15000).subscribe((x => {
+    this.sub = interval(58000).subscribe((x => {
       this.callBE();
     }));
   }
@@ -46,16 +46,19 @@ export class HomeComponent implements OnInit {
     return total;
   }
 
+  getSlice(exp: string): string {
+    return exp.slice(0, -5);
+  }
+
 
   callBE() {
     this.optionsService.getOptions().subscribe((data: OptionsChain) => {
       this.dataOC = data;
       console.log(data);
       this.optionsService.optionsChain = data;
-      this.optionsService.strikePrices = data.records.strikePrices;
-      this.optionsService.expiryDates =data.records.expiryDates;
+      this.optionsService.strikePrices = data.records.strikePrices.filter(p => p > 14000 && p < 20000);
+      this.optionsService.expiryDates = data.records.expiryDates;
       this.defaultExpDate = data.records.expiryDates[1];
-      this.defaultExpDateStr = this.defaultExpDate.slice(0, -5)
       this.datestampNow = new Date();
 
       this.myOptions = [];

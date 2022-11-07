@@ -67,44 +67,63 @@
                     <div class="row mb-4">
                         <div class="col">
                             <div class="form-outline">
-                                <select name="sessk" class="form-select form-select-lg mb-3" [(ngModel)]="selectedStrike" (change)="onChangeManager($event)" aria-label=".form-select-lg example" required>                                    
-                                    <option *ngFor="let strikeOption of strikeOptions" [ngValue]="strikeOption">{{strikeOption.value}}</option>                                    
-                                </select>                                
+                                <select name="sessk" class="form-select form-select-lg mb-3"
+                                    [(ngModel)]="selectedStrike"  name="strk"  aria-label=".form-select-lg example" required>
+                                    <option *ngFor="let strikeOption of strikeOptions" [ngValue]="strikeOption">
+                                        {{strikeOption.value}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-outline">
-                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                                    <option *ngFor="let expiryDate of expiryDates" value="strikeOption">{{expiryDate}}</option> 
-                                </select>   
+                                <select class="form-select form-select-lg mb-3" [(ngModel)]="saveOption.ExpDate" name="exp" aria-label=".form-select-lg example">
+                                    <option *ngFor="let expiryDate of expiryDates" [ngValue]="expiryDate">{{expiryDate}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col">
                             <div class="form-outline">
-                                <input type="number" id="form3Example1" class="form-control" />
+                                <input type="number" [(ngModel)]="saveOption.Quantity" name="rst" id="form3Example1" class="form-control" />
                                 <label class="form-label" for="form3Example1">Quantity</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-outline">
-                                <input type="number" id="form3Example2" class="form-control" />
+                                <input type="number" [(ngModel)]="saveOption.Entered" name="rsu" id="form3Example2" class="form-control" />
                                 <label class="form-label" for="form3Example2">Entered</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Checkbox -->
-                    <div class="form-check d-flex justify-content-center mb-4">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                        <label class="form-check-label" for="form2Example33">
-                            Subscribe to our newsletter
-                        </label>
-                    </div>
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+                    <div class="row mb-4">
+                        <div class="col-md-6 d-flex justify-content-center">
+                          <!-- Checkbox -->
+                          <div class="form-check mb-3 mb-md-0" style="color:green;">
+                            <input class="form-check-input" type="checkbox" [checked]="saveOption.BUY"
+                            (change)="saveOption.BUY = !saveOption.BUY "  value="" id="loginCheck"/>
+                            <label class="form-check-label" name="buy" for="loginCheck"><b>Buy</b></label>
+                          </div>
+                          &nbsp; | &nbsp;
+                          <div class="form-check mb-3 mb-md-0" style="color:red;">
+                            <input class="form-check-input" type="checkbox" [checked]="saveOption.SELL"
+                            (change)="saveOption.SELL = !saveOption.SELL" value="" id="loginCheck" />
+                            <label class="form-check-label" name="sell" for="loginCheck"><b>Sell</b></label>
+                          </div>
+                        </div>
+                
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <button type="submit" (click)="add()" class="btn btn-primary btn-block mb-4">Add</button>
+                            &nbsp;
+                            <button type="submit" (click)="update()" class="btn btn-primary btn-block mb-4">Ipdate</button>
+                            &nbsp;
+                            <button type="submit" (click)="clear()" class="btn btn-primary btn-block mb-4">Clear</button>
+                            &nbsp;
+                            <button type="submit" [routerLink]="['']" class="btn btn-secondary btn-block mb-4">Cancel</button>
+                        </div>
+                      </div>
                 </form>
             </div>
         </div>
